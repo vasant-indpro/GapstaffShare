@@ -26,7 +26,7 @@
 		885F5EBE20FC9EAB0075342E /* NotesShared.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = NotesShared.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		885F5EC920FC9FE00075342E /* NotesShared.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = NotesShared.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		885F5ECB20FC9FE00075342E /* NotesShared.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = NotesShared.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		885F5ED020FCB6AD0075342E /* ReadMe.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = ReadMe.md; sourceTree = "<group>"; };
+		885F5ED020FCB6AD0075342E /* ReadMe.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = ReadMe.md; path = ../ReadMe.md; sourceTree = "<group>"; };
 		885F5ED220FCBDC00075342E /* SwiftyJSON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwiftyJSON.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		885F5F0620FCC0DE0075342E /* GapstaffShared.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = GapstaffShared.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		88ADFBEB20FC77E60011B63E /* NotesApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NotesApp.app; sourceTree = BUILT_PRODUCTS_DIR; };

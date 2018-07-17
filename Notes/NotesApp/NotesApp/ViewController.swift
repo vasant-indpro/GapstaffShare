@@ -9,6 +9,7 @@
 import UIKit
 import NotesShared
 import SwiftyJSON
+import GapstaffShared
 
 class ViewController: UIViewController {
 
@@ -22,6 +23,8 @@ class ViewController: UIViewController {
         let result = Add.twoNumbers(num1: 1, num2: 3)
         print("Result: \(result)")
         
+        let assignment = GSGroup()
+        print(assignment.dayAssignments.first?.assignments)
     }
 
     override func didReceiveMemoryWarning() {

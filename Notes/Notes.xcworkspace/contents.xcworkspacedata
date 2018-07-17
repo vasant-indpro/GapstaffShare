@@ -2,13 +2,16 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:GapstaffShared/GapstaffShared.xcodeproj">
+      location = "group:NotesApp/../ReadMe.md">
    </FileRef>
    <FileRef
       location = "group:NotesApp/NotesApp.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:NotesShared/NotesShared.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:GapstaffShared/GapstaffShared.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Pods/Pods.xcodeproj">
