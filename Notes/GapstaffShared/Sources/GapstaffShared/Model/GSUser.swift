@@ -8,23 +8,35 @@
 
 import UIKit
 
-class GSUser: NSObject {
+public class GSUser: NSObject {
     
-    var id: Int?
-    var username = ""
-    var lastPasswordReset = ""
-    var profilePicture = ""
-    var dob = ""
-    var firstName = ""
-    var lastName = ""
-    var email = ""
-    var password = ""
-    var tel1 = ""
-    var externalUserId = ""
-    var rowStatus = ""
-    var enabled: Bool = false
+    public var id: Int?
     
-    init(_ dictionary: [String: Any]) {
+    public var username = ""
+    
+    public var lastPasswordReset = ""
+    
+    public var profilePicture = ""
+    
+    public var dob = ""
+    
+    public var firstName = ""
+    
+    public var lastName = ""
+    
+    public var email = ""
+    
+    public var password = ""
+    
+    public var tel1 = ""
+    
+    public var externalUserId = ""
+    
+    public var rowStatus = ""
+    
+    public var enabled: Bool = false
+    
+    public init(_ dictionary: [String: Any]) {
         
         if let id = dictionary["id"] as? Int {
             self.id = id

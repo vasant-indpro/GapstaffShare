@@ -8,17 +8,17 @@
 
 import UIKit
 
-class GSEmployeeInvitation: NSObject {
+public class GSEmployeeInvitation: NSObject {
     
-    var employeeId: Int?
-    var employeeName = ""
-    var employeeProfilePicture = ""
-    var available = ""
-    var veto = ""
-    var applications = [Any]()
-    var invtations = [GSInvitation]()
+    public var employeeId: Int?
+    public var employeeName = ""
+    public var employeeProfilePicture = ""
+    public var available = ""
+    public var veto = ""
+    public var applications = [Any]()
+    public var invtations = [GSInvitation]()
     
-    init(_ dictionary: [String: Any]) {
+    public init(_ dictionary: [String: Any]) {
         
         if let employeeId = dictionary["employeeId"] as? Int {
             self.employeeId = employeeId

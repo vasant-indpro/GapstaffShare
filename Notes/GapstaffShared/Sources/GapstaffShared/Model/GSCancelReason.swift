@@ -8,14 +8,14 @@
 
 import UIKit
 
-class GSCancelReason: NSObject {
+public class GSCancelReason: NSObject {
     
-    var shortCode = ""
-    var title = ""
-    var desc = ""
-    var available = false
+    public var shortCode = ""
+    public var title = ""
+    public var desc = ""
+    public var available = false
     
-    init(_ dictionary: [String: Any]) {
+    public init(_ dictionary: [String: Any]) {
         
         if let shortCode = dictionary["shortCode"] as? String {
             self.shortCode = shortCode

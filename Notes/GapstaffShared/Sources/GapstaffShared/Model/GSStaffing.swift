@@ -8,35 +8,37 @@
 
 import UIKit
 
-class GSStaffing: NSObject {
+public class GSStaffing: NSObject {
     
-    var firstName = ""
-    var lastName = ""
-    var profilePicture = ""
+    public var firstName = ""
     
-    var start = ""
-    var end = ""
+    public var lastName = ""
     
-    var activity1Title = ""
-    var activity2End = ""
-    var activity2Start = ""
-    var activity2Title = ""
+    public var profilePicture = ""
     
-    var positionName = ""
+    public var start = ""
     
-    var id: Int?
+    public var end = ""
     
-    var status: StaffingStatus = .NONE
+    public var activity1Title = ""
     
-    var invtation: GSInvitation?
+    public var activity2End = ""
     
-    var transferApplication: GSApplication?
+    public var activity2Start = ""
     
-    var isProposalAvailable: Bool {
-        return (transferApplication != nil)
-    }
+    public var activity2Title = ""
     
-    init(_ dictionary: [String: Any]) {
+    public var positionName = ""
+    
+    public var id: Int?
+    
+    public var status: GSStaffingStatus = .NONE
+    
+    public var invtation: GSInvitation?
+    
+    public var transferApplication: GSApplication?
+    
+    public init(_ dictionary: [String: Any]) {
         
         if let firstName = dictionary["firstName"] as? String {
             self.firstName = firstName
@@ -76,7 +78,7 @@ class GSStaffing: NSObject {
         }
         
         if let status = dictionary["status"] as? String {
-            self.status = StaffingStatus(rawValue: status)!
+            self.status = GSStaffingStatus(rawValue: status)!
         }
         
         if let positionName = dictionary["positionName"] as? String {
@@ -94,5 +96,12 @@ class GSStaffing: NSObject {
         if let transferApplication = dictionary["transferApplication"] as? [String: Any] {
             self.transferApplication = GSApplication(transferApplication)
         }
+    }
+}
+
+extension GSStaffing {
+    
+    public var isProposalAvailable: Bool {
+        return (transferApplication != nil)
     }
 }

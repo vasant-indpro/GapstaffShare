@@ -8,26 +8,38 @@
 
 import UIKit
 
-class GSInvitation: NSObject {
+public class GSInvitation: NSObject {
     
-    var iId: Int?
-    var type = ""
-    var status = ""
-    var invitationById: Int?
-    var invitationByName = ""
-    var invitationToId: Int?
-    var invitationToName = ""
-    var invitationToProfilePicture = ""
-    var assignmentId: Int?
-    var message = ""
-    var createdDate = ""
-    var lastUpdateDate = ""
-    var rowStatus = ""
+    public var id: Int?
+    
+    public var type = ""
+    
+    public var status = ""
+    
+    public var invitationById: Int?
+    
+    public var invitationByName = ""
+    
+    public var invitationToId: Int?
+    
+    public var invitationToName = ""
+    
+    public var invitationToProfilePicture = ""
+    
+    public var assignmentId: Int?
+    
+    public var message = ""
+    
+    public var createdDate = ""
+    
+    public var lastUpdateDate = ""
+    
+    public var rowStatus = ""
     
     init(_ dictionary: [String: Any]) {
         
-        if let iId = dictionary["id"] as? Int {
-            self.iId = iId
+        if let id = dictionary["id"] as? Int {
+            self.id = id
         }
         
         if let type = dictionary["type"] as? String {
@@ -85,12 +97,12 @@ extension Array where Element: GSInvitation {
     /// Sort Invitations
     ///
     /// - Returns: Sorted Invitations
-    var sortIdWise: [GSInvitation] {
+    public var sortIdWise: [GSInvitation] {
         GSPrint("\n\nOriginal Array: \(self)")
         let sorted_invitations = self.sorted { (invitation1, invitation2) -> Bool in
             
-            let id1 = invitation1.iId
-            let id2 = invitation2.iId
+            let id1 = invitation1.id
+            let id2 = invitation2.id
             
             return id1! > id2!
         }

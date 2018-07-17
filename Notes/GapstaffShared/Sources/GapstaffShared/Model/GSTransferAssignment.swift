@@ -8,49 +8,37 @@
 
 import UIKit
 
-class GSTransferAssignment: NSObject {
+public class GSTransferAssignment: NSObject {
     
-    var id: Int?
+    public var id: Int?
     
-    var type = ""
+    public var type = ""
     
-    var assignmentId: Int?
+    public var assignmentId: Int?
     
-    var appliedById: Int?
+    public var appliedById: Int?
     
-    var status: AssignmentStatus = .NONE
+    public var status: GSAssignmentStatus = .NONE
     
-    var createdDate = ""
+    public var createdDate = ""
     
-    var lastUpdateDate = ""
+    public var lastUpdateDate = ""
     
-    var rowStatus = ""
+    public var rowStatus = ""
     
-    var assignment: Assignment?
+    public var assignment: GSAssignment?
     
-    //    var transferChoices = GSTransferChoices()
+    //    public var transferChoices = GSTransferChoices()
     
-    var invtations = [GSInvitation]()
+    public var invtations = [GSInvitation]()
     
-    var applications = [GSApplication]()
+    public var applications = [GSApplication]()
     
-    var confirmed_application: GSApplication? {
-        
-        let cApplication = applications.first { (application) -> Bool in
-            return application.status == .CONFIRMED
-        }
-        return cApplication
+    public override init() {
+        super.init()
     }
     
-    
-    var appliedApplicationsCount: Int {
-        let applied_applications = self.applications.filter { (application) -> Bool in
-            return application.status == .APPLIED
-        }
-        return applied_applications.count
-    }
-    
-    func initialise(_ dictionary: [String: Any]) {
+    public init(_ dictionary: [String: Any]) {
         
         if let id = dictionary["id"] as? Int {
             self.id = id
@@ -98,7 +86,26 @@ class GSTransferAssignment: NSObject {
         }
         
         if let assignment = dictionary["assignment"] as? [String: Any] {
-            self.assignment = Assignment(assignment)
+            self.assignment = GSAssignment(assignment)
         }
+    }
+}
+
+extension GSTransferAssignment {
+    
+    public var confirmed_application: GSApplication? {
+        
+        let cApplication = applications.first { (application) -> Bool in
+            return application.status == .CONFIRMED
+        }
+        return cApplication
+    }
+    
+    
+    public var appliedApplicationsCount: Int {
+        let applied_applications = self.applications.filter { (application) -> Bool in
+            return application.status == .APPLIED
+        }
+        return applied_applications.count
     }
 }
