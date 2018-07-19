@@ -14,11 +14,11 @@ public struct GSDayAssignment {
     
     public var assignments = [GSAssignment]()
     
-    public var unique_status = Set<GSAssignmentStatus>()
-    
     public var assignmentTimings = [GSAssignmentTiming]()
     
     public var cancelReason: GSCancelReason?
+    
+    var uniqueStatuses = Set<GSAssignmentStatus>()
     
     public init(_ dictionary: [String: Any]) {
         
@@ -31,7 +31,7 @@ public struct GSDayAssignment {
             for assignment in assignments {
                 let assignment = GSAssignment(assignment)
                 self.assignments.append(assignment)
-                self.unique_status.insert(assignment.status)
+                self.uniqueStatuses.insert(assignment.status)
             }
         }
         
@@ -64,25 +64,35 @@ public struct GSDayAssignment {
 
 extension GSDayAssignment {
     
+    public func components(_ selected: Bool) -> GSCalendarUIComponents {
+        return GSCalendarUI(self, selected: selected).components
+    }
+}
+
+extension GSDayAssignment {
+    
     /// Get assignment timings based on Start time of Assignment
     ///
-    /// - Parameter start: Start time of Assignment
+    /// - Parameter assignments: [GSAssignment]
     /// - Returns: GSAssignmentTiming
-    public func getGSAssignmentTiming(_ start: String) -> GSAssignmentTiming {
+    func assignmentTiming(for assignments: [GSAssignment]) -> GSAssignmentTiming {
         
-        let date = start.convertToDate
-        let dateComponents = getHrMin(from: date)
-        
-        let totalMinutes = dateComponents.hour * 60 + dateComponents.min
-        GSPrint("\n\nTotal minuts from Shift: \(totalMinutes)\n\n")
-        
-        for assignmentTiming in assignmentTimings {
+        if let start = assignments.first?.start  {
             
-            let start = getMinutes(from: assignmentTiming.start)
-            let end = getMinutes(from: assignmentTiming.end)
+            let date = start.convertToDate
+            let dateComponents = getHrMin(from: date)
             
-            if totalMinutes >= start && totalMinutes <= end {
-                return assignmentTiming
+            let totalMinutes = dateComponents.hour * 60 + dateComponents.min
+            GSPrint("\n\nTotal minuts from Shift: \(totalMinutes)\n\n")
+            
+            for assignmentTiming in assignmentTimings {
+                
+                let start = getMinutes(from: assignmentTiming.start)
+                let end = getMinutes(from: assignmentTiming.end)
+                
+                if totalMinutes >= start && totalMinutes <= end {
+                    return assignmentTiming
+                }
             }
         }
         return GSAssignmentTiming()

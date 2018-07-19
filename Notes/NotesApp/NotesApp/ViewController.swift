@@ -7,6 +7,7 @@
 //
 
 import UIKit
+
 import NotesShared
 import SwiftyJSON
 import GapstaffShared
@@ -23,13 +24,20 @@ class ViewController: UIViewController {
         let result = Add.twoNumbers(num1: 1, num2: 3)
         print("Result: \(result)")
         
-        let assignment = GSGroup()
-        print(assignment.dayAssignments.first?.assignments)
+        let group = GSGroup()
+        print(group.dayAssignments.first?.assignments.first?.status == .NONE)
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+}
+
+public struct Add {
+
+    public static func twoNumbers(num1: Int, num2: Int) -> Int {
+        return num1 + num2 + 10
     }
 }
 

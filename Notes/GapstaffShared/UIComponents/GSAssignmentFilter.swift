@@ -1,5 +1,5 @@
 //
-//  AssignmentFilter.swift
+//  GSAssignmentFilter.swift
 //  GapStaffEmployee
 //
 //  Created by Vasant Hugar on 22/01/18.
@@ -8,23 +8,15 @@
 
 import UIKit
 
-class AssignmentFilter: NSObject {
+extension Array where Element: GSAssignment {
     
-    /// Filter assignments based on Type
-    ///
-    /// Parameters: assignments: Array of Assignment
-    /// Returns: Filtered Array of Assignment
-    static func filter(_ assignments: [GSAssignment]) -> [GSAssignment] {
-        return split(assignments)
+    func filter() -> [GSAssignment] {
+        return split()
     }
     
-    /// Split assignments into my Shifts, Swap, Open Shift and Swap Calendar
-    ///
-    /// - Parameter assignments: Array of Assignments
-    /// - Returns: (myShifts, swap, openShifts)
-    private static func split(_ assignments: [GSAssignment]) -> [GSAssignment] {
+    private func split() -> [GSAssignment] {
         
-        guard assignments.count != 0 else {
+        guard self.count != 0 else {
             return []
         }
         
@@ -35,7 +27,7 @@ class AssignmentFilter: NSObject {
         var topPriorityOpenShiftArray = [GSAssignment]()
         
         /// Sort the Assignments Date wise
-        let sortedAssignment = assignments.sortDateWise
+        let sortedAssignment = sortDateWise
         
         for assignment in sortedAssignment {
             
@@ -57,9 +49,6 @@ class AssignmentFilter: NSObject {
         
         return final_openShift
     }
-}
-
-extension Array where Element: GSAssignment {
     
     /// Sort Assignments
     ///

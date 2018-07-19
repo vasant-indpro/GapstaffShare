@@ -8,7 +8,7 @@
 
 import UIKit
 
-enum GSCalendarDesignType {
+fileprivate enum GSCalendarDesignType {
     case noAssignment
     case cancelled
     case shift
@@ -18,71 +18,55 @@ enum GSCalendarDesignType {
 
 class GSCalendarUI: NSObject {
     
-    static func makeDesign(date: Date,
-                           selected: Bool,
-                           assignments: [GSAssignment]) -> GSCalendarUIComponents {
+    var components = GSCalendarUIComponents()
+    
+    init(_ dayAssignment: GSDayAssignment, selected: Bool) {
+        super.init()
         
-        // Sort the Selected Assignments
-        let sortedAssignments = AssignmentFilter.filter(assignments)
+        let sortedAssignments = dayAssignment.assignments.filter()
         
-        var statuses = Set<GSAssignmentStatus>()
-        
-        for assignment in sortedAssignments {
-            statuses.insert(assignment.status)
-        }
+        let statuses = dayAssignment.uniqueStatuses
         
         let designType = designTypeOf(statuses)
-        
-        var components = GSCalendarUIComponents()
-        
         if selected {
             GSPrint("\n\nStatus\n-----------------------------\n\(statuses)")
-            GSPrint("Design Type: \(designType)")
+            GSPrint("Design Type: \(designType)\n\n")
         }
+        
+        components.borderWidth = selected ? 1.0 : 0.0
         
         switch designType {
             
         case .noAssignment:
-            update_NO_ASSIGNMENT(&components)
+            update_NO_ASSIGNMENT()
             break
             
         case .cancelled:
-            update_CANCELLED(&components, assignments: sortedAssignments)
+            update_CANCELLED(assignments: sortedAssignments)
             break
             
         case .shift:
-            update(&components, selected: selected, assignments: sortedAssignments)
+            update(selected: selected,
+                   assignments: sortedAssignments,
+                   assignmentTiming: dayAssignment.assignmentTiming(for: sortedAssignments))
             break
             
         case .withoutImage:
-            update_WITHOUT_IMAGE(&components, selected: selected)
+            update_WITHOUT_IMAGE(selected: selected)
             break
             
         case .withImage:
-            update_WITH_IMAGE(&components, selected: selected, assignments: sortedAssignments)
+            update_WITH_IMAGE(selected: selected,
+                              assignments: sortedAssignments,
+                              assignmentTiming: dayAssignment.assignmentTiming(for: sortedAssignments))
             break
-        }
-        
-        // Set Selected
-        setSelected(&components, selected: selected, date: date)
-        
-        return components
-    }
-    
-    static func setSelected(_ components: inout GSCalendarUIComponents, selected: Bool, date: Date) {
-        
-        components.today = date.isToday
-        components.borderWidth = selected ? 1.0 : 0.0
-        
-        if date.isToday {
-            components.color = .white
         }
     }
 }
 
 extension GSCalendarUI {
     
-    fileprivate static func designTypeOf(_ statuses: Set<GSAssignmentStatus>) -> GSCalendarDesignType {
+    fileprivate func designTypeOf(_ statuses: Set<GSAssignmentStatus>) -> GSCalendarDesignType {
         
         if statuses.count > 0 {
             
@@ -125,47 +109,41 @@ extension GSCalendarUI {
 
 extension GSCalendarUI {
     
-    fileprivate static func update_NO_ASSIGNMENT(_ components: inout GSCalendarUIComponents) {
+    fileprivate func update_NO_ASSIGNMENT() {
         components.backgroundColor = .white
         components.image = nil
         components.color = .black
     }
     
-    fileprivate static func update_CANCELLED(_ components: inout GSCalendarUIComponents,
-                                             assignments: [GSAssignment]) {
+    fileprivate func update_CANCELLED(assignments: [GSAssignment]) {
         if let assignment = assignments.first {
             components.reason = assignment.cancelReason?.shortCode
         }
     }
     
-    static func update(_ components: inout GSCalendarUIComponents,
-                       selected: Bool,
-                       assignments: [GSAssignment]) {
-        
-        let assignmentTiming = assignments.assignmentTiming
+    func update(selected: Bool,
+                assignments: [GSAssignment],
+                assignmentTiming: GSAssignmentTiming) {
         
         if assignments.isClinical {
             let image = selected ? assignmentTiming.shiftColorImage : assignmentTiming.whiteImage
             components.image = image
-            setClinical(&components, selected: selected, assignmentTiming: assignmentTiming)
+            setClinical(selected: selected, assignmentTiming: assignmentTiming)
         }
         else {
-            setNonClinical(&components, selected: selected, assignmentTiming: assignmentTiming)
+            setNonClinical(selected: selected, assignmentTiming: assignmentTiming)
         }
     }
     
-    fileprivate static func update_WITH_IMAGE(_ components: inout GSCalendarUIComponents,
-                                              selected: Bool,
-                                              assignments: [GSAssignment]) {
+    fileprivate func update_WITH_IMAGE(selected: Bool,
+                                       assignments: [GSAssignment],
+                                       assignmentTiming: GSAssignmentTiming) {
         
-        update_WITHOUT_IMAGE(&components, selected: selected)
-        
-        let assignmentTiming = assignments.assignmentTiming
+        update_WITHOUT_IMAGE(selected: selected)
         components.image = selected ? assignmentTiming.greenImage : assignmentTiming.whiteImage
     }
     
-    fileprivate static func update_WITHOUT_IMAGE(_ components: inout GSCalendarUIComponents,
-                                                 selected: Bool) {
+    fileprivate func update_WITHOUT_IMAGE(selected: Bool) {
         
         components.image = nil
         
@@ -182,9 +160,8 @@ extension GSCalendarUI {
 
 extension GSCalendarUI {
     
-    fileprivate static func setClinical(_ components: inout GSCalendarUIComponents,
-                                        selected: Bool,
-                                        assignmentTiming: GSAssignmentTiming) {
+    fileprivate func setClinical(selected: Bool,
+                                 assignmentTiming: GSAssignmentTiming) {
         if selected {
             components.backgroundColor = .white
             components.color = assignmentTiming.color
@@ -195,9 +172,8 @@ extension GSCalendarUI {
         }
     }
     
-    fileprivate static func setNonClinical(_ components: inout GSCalendarUIComponents,
-                                           selected: Bool,
-                                           assignmentTiming: GSAssignmentTiming) {
+    fileprivate func setNonClinical(selected: Bool,
+                                    assignmentTiming: GSAssignmentTiming) {
         
         components.backgroundColor = selected ? .clinicalSelected : .clinicalUnselected
         components.color = assignmentTiming.color
@@ -206,11 +182,6 @@ extension GSCalendarUI {
 }
 
 extension Array where Element: GSAssignment {
-    
-    /// Get Shift
-    fileprivate var assignmentTiming: GSAssignmentTiming {
-        return GSAssignmentTiming()
-    }
     
     /// Check if it is clinical or non clinical
     fileprivate var isClinical: Bool {
@@ -224,7 +195,7 @@ extension Array where Element: GSAssignment {
     }
 }
 
-extension UIColor {
+fileprivate extension UIColor {
     
     static var cancelReason: UIColor { return UIColor(rgbValue: 0xE74C3C) }
     

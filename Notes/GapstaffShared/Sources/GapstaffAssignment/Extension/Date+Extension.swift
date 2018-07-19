@@ -10,15 +10,15 @@ import Foundation
 
 extension Date {
     
-    var isToday: Bool {
+    public var isToday: Bool {
         return isEqual(Date())
     }
     
-    var isYesterday: Bool {
+    public var isYesterday: Bool {
         return GSCalendar.calendar.isDateInYesterday(self)
     }
     
-    func isEqual(_ date: Date) -> Bool {
+    public func isEqual(_ date: Date) -> Bool {
         
         let order = Calendar.current.compare(self, to: date, toGranularity: .day)
         
@@ -31,7 +31,7 @@ extension Date {
         }
     }
     
-    var startOfDay: Date {
+    public var startOfDay: Date {
         
         let calendar = Calendar.current
         var components = calendar.dateComponents([.hour, .minute, .second], from: self)
@@ -42,7 +42,7 @@ extension Date {
         return calendar.date(from: components)!
     }
     
-    var monthTitle: String {
+    public var monthTitle: String {
         
         let components = Calendar.current.dateComponents([.month, .year], from: self)
         
@@ -52,52 +52,52 @@ extension Date {
         return monthName.capitalized + " " + (year?.description)!
     }
     
-    var day: String {
+    public var day: String {
         let dateFormatter = GSCalendar.dateFormatter
         dateFormatter.dateFormat = "d"
         return dateFormatter.string(from: self).capitalized
     }
     
-    var month: String {
+    public var month: String {
         let dateFormatter = GSCalendar.dateFormatter
         dateFormatter.dateFormat = "MMMM"
         return dateFormatter.string(from: self).capitalized
     }
     
-    var shortMonth: String {
+    public var shortMonth: String {
         let dateFormatter = GSCalendar.dateFormatter
         dateFormatter.dateFormat = "MMM"
         return dateFormatter.string(from: self).capitalized
     }
     
-    var week: String {
+    public var week: String {
         let dateFormatter = GSCalendar.dateFormatter
         dateFormatter.dateFormat = "EEEE"
         return dateFormatter.string(from: self).capitalized
     }
     
     /// Convert date to String
-    var string: String {
+    public var string: String {
         
         let dateFormatter = GSCalendar.dateFormatter
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm Z"
         return dateFormatter.string(from: self)
     }
     
-    var gs_string: String {
+    public var gs_string: String {
         let formatter = GSCalendar.dateFormatter
         formatter.dateFormat = "yyyy-MM-dd"
         return formatter.string(from: self)
     }
     
-    var convertToString: String {
+    public var convertToString: String {
         let formatter = GSCalendar.dateFormatter
         formatter.dateFormat = "yyyy-MM-dd HH:mm ZZZZ"
         return formatter.string(from: self)
     }
-
+    
     //Get hr:min format
-    var hr_min: String {
+    public var hr_min: String {
         
         let calendar = GSCalendar.calendar
         let components = calendar.dateComponents([.hour, .minute], from: self)
@@ -106,7 +106,7 @@ extension Date {
     }
     
     //Get hr:min format check if End date belongs to next day
-    func hr_min_End(_ eDate: Date) -> String {
+    public func hr_min_End(_ eDate: Date) -> String {
         
         let calendar = GSCalendar.calendar
         let components = calendar.dateComponents([.hour, .minute, .day], from: eDate)
@@ -129,7 +129,7 @@ extension Date {
     ///   - date1: Date()
     ///   - date2: Date()
     /// - Returns: yes if falls else no
-    func isBetween(_ date1: Date, and date2: Date) -> Bool {
+    public func isBetween(_ date1: Date, and date2: Date) -> Bool {
         return (min(date1, date2) ... max(date1, date2)).contains(self)
     }
     
@@ -137,7 +137,7 @@ extension Date {
     ///
     /// - Parameter tillDate: nextDate
     /// - Returns: number of Days
-    func numberOfDays(_ nextDate: Date) -> Int {
+    public func numberOfDays(_ nextDate: Date) -> Int {
         return Calendar.current.dateComponents([.day], from: self, to: nextDate).day ?? 0
     }
     
@@ -145,7 +145,7 @@ extension Date {
     ///
     /// - Parameter tillDate: nextDate
     /// - Returns: number of Months
-    func numberOfMonths(_ nextDate: Date) -> Int {
+    public func numberOfMonths(_ nextDate: Date) -> Int {
         return Calendar.current.dateComponents([.month], from: self, to: nextDate).month ?? 0
     }
 }
